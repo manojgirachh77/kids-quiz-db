@@ -1,0 +1,13 @@
+{
+  "name": "user",
+  "method": "PUT",
+  "values": {
+    "userID": "user3",
+    "location": "Noida",
+    "gender": "MALE",
+    "interests": [
+      "MATHS",
+      "ENGLISH"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "user",
+  "method": "DELETE",
+  "values": {
+    "userID": "user3"
+  }
+}

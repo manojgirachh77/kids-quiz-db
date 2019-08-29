@@ -5,7 +5,9 @@ import java.util.Map;
 public class RequestDetails {
 	private String name;
 	private String method;
+	private String query;
 	private Map<String, Object> values;
+	
 	public String getName() {
 		return name;
 	}
@@ -24,6 +26,11 @@ public class RequestDetails {
 	public void setValues(Map<String, Object> values) {
 		this.values = values;
 	}
-	
+	public String getQuery() {
+		return query;
+	}
+	public void setQuery(String query) {
+		this.query = query;
+	}
 	
 }

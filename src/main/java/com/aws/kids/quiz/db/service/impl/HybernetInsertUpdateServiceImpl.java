@@ -1,56 +1,54 @@
 package com.aws.kids.quiz.db.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.metamodel.EntityType;
 
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.amazonaws.jmespath.ObjectMapperSingleton;
 import com.aws.kids.quiz.db.data.RequestDetails;
 import com.aws.kids.quiz.db.data.ResponseDetails;
+import com.aws.kids.quiz.db.dto.ItemModel;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class HybernetInsertServiceImpl extends AbstractHybernetService {
+public class HybernetInsertUpdateServiceImpl extends AbstractHybernetService {
 
 	@Override
 	public ResponseDetails perform(RequestDetails request) {
 		ResponseDetails responseDetails = new ResponseDetails();
+		Session session = null;
 		try {
-		Session session = openSession();
+		session = openSession();
 		session.beginTransaction();
 		session.saveOrUpdate(populateEntity(request));
-		
-		closeSession(session);
 		responseDetails.setMessageID("000");
 		responseDetails.setMessageReason("Successfully updated details");
 
 		} catch(Exception ex) {
 			responseDetails.setMessageID("999");
 			responseDetails.setMessageReason("Unable to Registor "+ ex);
+		} finally {
+			closeSession(session);
 		}
 		return responseDetails;
 	}
 
 	private Object populateEntity(RequestDetails request) {
-		String typeName = request.getName();
-		Object bean = getEntiryInstance(typeName);
+		EntityType<?> entity = getEntiryType(request.getName());
 		try {
-			BeanUtilsBean.getInstance().populate(bean, request.getValues());
-		} catch (IllegalAccessException | InvocationTargetException e) {
+			
+			ObjectMapper mapper = ObjectMapperSingleton.getObjectMapper();
+			Object bean = (ItemModel) mapper.convertValue(request.getValues(), entity.getJavaType());
+			if(bean instanceof ItemModel) {
+				((ItemModel)bean).setCreationTime(new Date());
+				((ItemModel)bean).setModifyTime(new Date());
+			}
+			return bean;
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return bean;
-	}
-	private Object getEntiryInstance(String typeName) {
-		try {
-			SessionFactory sessionFactory = getSessionFactory();
-			Set<EntityType<?>> entities = sessionFactory.getMetamodel().getEntities();
-			EntityType<?> entity = entities.stream().filter(item->item.getName().equals(typeName)).findFirst().get(); 
-			return entity.getJavaType().newInstance();
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 		return null;
 	}

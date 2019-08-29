@@ -24,7 +24,7 @@ public class KidsQuizDBHandlerTest {
     @BeforeClass
     public static void createInput() throws IOException {
         input = new RequestDetails();
-        input.setMethod("PUT");
+        input.setMethod("GET");
         input.setName("user");
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("userID", "User1");
@@ -51,7 +51,6 @@ public class KidsQuizDBHandlerTest {
 
         ResponseDetails output = handler.handleRequest(input, ctx);
 
-        // TODO: validate output here if needed.
         Assert.assertEquals("000", output.getMessageID());
     }
 }

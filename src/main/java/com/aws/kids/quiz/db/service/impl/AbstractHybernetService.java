@@ -1,5 +1,9 @@
 package com.aws.kids.quiz.db.service.impl;
 
+import java.util.Set;
+
+import javax.persistence.metamodel.EntityType;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,7 +19,7 @@ public abstract class AbstractHybernetService implements HybernetService {
 		if (null != sessionFactory)
 			return sessionFactory;
 		try {
-			sessionFactory = new Configuration().configure().buildSessionFactory();
+			sessionFactory = new Configuration().configure("resources/hibernate.cfg.xml").buildSessionFactory();
 		} catch (HibernateException e) {
 			System.err.println("Initial SessionFactory creation failed." + e);
 			throw new ExceptionInInitializerError(e);
@@ -29,5 +33,16 @@ public abstract class AbstractHybernetService implements HybernetService {
 		session.flush();
 		session.close();
 	}
-	
+	protected EntityType<?> getEntiryType(String typeName) {
+		try {
+			SessionFactory sessionFactory = getSessionFactory();
+			Set<EntityType<?>> entities = sessionFactory.getMetamodel().getEntities();
+			EntityType<?> entity = entities.stream().filter(item -> item.getName().equals(typeName)).findFirst().get();
+			return entity;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
 }
