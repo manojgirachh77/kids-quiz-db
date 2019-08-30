@@ -8,19 +8,24 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.internal.util.config.ConfigurationException;
 
 import com.aws.kids.quiz.db.service.HybernetService;
 
 public abstract class AbstractHybernetService implements HybernetService {
 
-	private static SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-	protected static SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() {
 		if (null != sessionFactory)
 			return sessionFactory;
 		try {
 			sessionFactory = new Configuration().configure("resources/hibernate.cfg.xml").buildSessionFactory();
 		} catch (HibernateException e) {
+			if(e instanceof ConfigurationException) {
+				sessionFactory = new Configuration().configure().buildSessionFactory();
+				return sessionFactory;
+			}
 			System.err.println("Initial SessionFactory creation failed." + e);
 			throw new ExceptionInInitializerError(e);
 		}
@@ -30,8 +35,10 @@ public abstract class AbstractHybernetService implements HybernetService {
 		return getSessionFactory().openSession();
 	}
 	protected void closeSession(Session session) {
-		session.flush();
-		session.close();
+		if(null != session) {
+			session.flush();
+			session.close();
+		}
 	}
 	protected EntityType<?> getEntiryType(String typeName) {
 		try {

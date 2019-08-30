@@ -1,7 +1,12 @@
 {
   "name": "user",
   "method": "GET",
-  "values": {
-    "userID": "user2"
-  }
+  "values": [
+  	{
+    	"userID": "user1"
+  	},
+  	{
+  		"userID": "user2"
+  	}
+  ]
 }

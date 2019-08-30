@@ -2,7 +2,9 @@
   "name": "user",
   "method": "SEARCH",
   "query": "GET_USER_BY_LOCATION",
-  "values": {
-    "location": "Noida"
-  }
+  "values": [
+	{
+	    "location": "Noida"
+	}
+  ]
 }

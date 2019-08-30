@@ -1,7 +1,12 @@
 {
   "name": "user",
   "method": "DELETE",
-  "values": {
-    "userID": "user3"
-  }
+  "values": [
+  	{
+    	"userID": "user1"
+  	},
+  	{
+    	"userID": "user2"
+  	}
+  ]
 }

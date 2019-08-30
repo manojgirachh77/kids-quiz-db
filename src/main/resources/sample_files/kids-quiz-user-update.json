@@ -1,13 +1,26 @@
 {
   "name": "user",
   "method": "PUT",
-  "values": {
-    "userID": "user3",
-    "location": "Noida",
-    "gender": "MALE",
-    "interests": [
-      "MATHS",
-      "ENGLISH"
-    ]
-  }
+  "values": [
+    {
+      "userID": "user1",
+      "location": "Noida",
+      "gender": "MALE",
+      "dob": "20140201",
+      "interests": [
+        "MATHS",
+        "ENGLISH"
+      ]
+    },
+    {
+      "userID": "user2",
+      "location": "Pune",
+      "gender": "MALE",
+      "dob": "20140203",
+      "interests": [
+        "MATHS",
+        "ENGLISH"
+      ]
+    }
+  ]
 }

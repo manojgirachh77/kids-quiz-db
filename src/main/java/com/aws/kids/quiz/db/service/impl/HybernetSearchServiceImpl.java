@@ -19,10 +19,10 @@ public class HybernetSearchServiceImpl extends AbstractHybernetService {
 			Session session = openSession();
 			session.beginTransaction();
 			Query query = session.getNamedQuery(request.getQuery());
-			for (String key : request.getValues().keySet()) {
-				EntityType<?> type = getEntiryType(request.getName());
+			EntityType<?> type = getEntiryType(request.getName());
+			for (String key : request.getValues().get(0).keySet()) {
 				ObjectMapper mapper = ObjectMapperSingleton.getObjectMapper();
-				query.setParameter(key, mapper.convertValue(request.getValues().get(key), type.getAttribute(key).getJavaType()));
+				query.setParameter(key, mapper.convertValue(request.getValues().get(0).get(key), type.getAttribute(key).getJavaType()));
 			}
 			responseDetails.setResult(query.getResultList());
 			closeSession(session);

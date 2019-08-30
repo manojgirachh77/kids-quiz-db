@@ -2,7 +2,9 @@
   "name": "user",
   "method": "SEARCH",
   "query": "GET_USER_BY_GENDER",
-  "values": {
-    "gender": "MALE"
-  }
+  "values": [
+  	{
+    	"gender": "MALE"
+  	}
+  ]	
 }

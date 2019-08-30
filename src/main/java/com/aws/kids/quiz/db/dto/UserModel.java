@@ -1,5 +1,6 @@
 package com.aws.kids.quiz.db.dto;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -24,7 +25,7 @@ public class UserModel extends ItemModel {
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	private String location;
-	
+	private Date dob; 
 	@ElementCollection(targetClass=Subject.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING) 
     @CollectionTable(name="user_interest")
@@ -48,6 +49,12 @@ public class UserModel extends ItemModel {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	public Date getDob() {
+		return dob;
+	}
+	public void setDob(Date dob) {
+		this.dob = dob;
 	}
 	public Set<Subject> getInterests() {
 		return interests;

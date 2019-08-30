@@ -1,12 +1,13 @@
 package com.aws.kids.quiz.db.data;
 
+import java.util.List;
 import java.util.Map;
 
 public class RequestDetails {
 	private String name;
 	private String method;
 	private String query;
-	private Map<String, Object> values;
+	private List<Map<String, Object>> values;
 	
 	public String getName() {
 		return name;
@@ -20,10 +21,10 @@ public class RequestDetails {
 	public void setMethod(String method) {
 		this.method = method;
 	}
-	public Map<String, Object> getValues() {
+	public List<Map<String, Object>> getValues() {
 		return values;
 	}
-	public void setValues(Map<String, Object> values) {
+	public void setValues(List<Map<String, Object>> values) {
 		this.values = values;
 	}
 	public String getQuery() {
@@ -32,5 +33,4 @@ public class RequestDetails {
 	public void setQuery(String query) {
 		this.query = query;
 	}
-	
 }
